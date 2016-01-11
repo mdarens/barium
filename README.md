@@ -1,7 +1,8 @@
-Barium
+buryem
 ======
 
-Pragmatic Styling with React.js
+# Got style conflicts? Bury 'em!
+Based on [Barium](http://github.com/yuanyan/barium/) by  Yuanyan Cao.
 
 ## Features
 
@@ -10,53 +11,41 @@ Pragmatic Styling with React.js
 * Better CSS Support: Pseudo Classes, Media Queries
 * Automatically Add things: Vendor Prefixes, Default "px" unit to numeric values where needed
 
-## Demo & Examples
-
-Live demo: [yuanyan.github.io/barium](http://yuanyan.github.io/barium/)
-
-To build the examples locally, run:
-
-```
-npm install
-gulp dev
-```
-
-Then open [`localhost:9999`](http://localhost:9999) in a browser.
 
 ## Installation
 
-The easiest way to use `barium` is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), etc).
-
-You can also use the standalone build by including `dist/barium.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
-
 ```
-npm install barium --save
+npm i buryem --save
+```
+
+## Developing
+To build locally, run:
+```
+npm install
+npm run build
 ```
 
 ## Usage
 
 ```
-var Barium = require('barium');
+import buryem from 'buryem';
 
-var pulseKeyframes = `
-	0% {
-		transform: scale3d(1, 1, 1);
+
+const animations = buryem.createAnimations({
+	blurh: {
+		"33%": {
+			transform: "translateX(2px)"
+		},
+		"66%": {
+			transform: "translateX(-2px)"
+		},
+		"100%": {
+			transform: "translateX(0px)"
+		}			
 	}
-
-	50% {
-		transform: scale3d(1.05, 1.05, 1.05);
-	}
-
-	100% {
-		transform: scale3d(1, 1, 1);
-	}
-`;
-
-var animations = Barium.createKeyframes({
-  pulse: pulseKeyframes
 });
 
-var styles = Barium.create({
+const styles = buryem.create({
   btn: {
     display: 'inline-block',
     color: '#000',
@@ -76,7 +65,7 @@ var styles = Barium.create({
 
     ':hover': {
       color: '#fff',
-      animation: `${animations.pulse} .5s infinite`
+      animation: `${animations.blurh} .5s infinite`
     },
     // Try resizing the window!
     '@media (max-width: 500px)': {
@@ -84,16 +73,12 @@ var styles = Barium.create({
       borderColor: '#46b8da'
     }
   }
-})
-
-var Example = React.createClass({
-
-    render: function() {
-        return (
-          <div>
-            <button className={styles.btn}>Click Me</button>
-          </div>
-        );
-    }
 });
+
+const Example = (props) => (
+	<div>
+		<button className={styles.btn}>Click Me</button>
+	</div>
+);
+
 ```
