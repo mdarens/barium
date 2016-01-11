@@ -46,26 +46,30 @@ export const create = (styles) => {
 
 export const createKeyframes = (keyframes) => {
   let animationName = `_${hash(JSON.stringify(keyframes))}`;
-  let cssText = `
-    @${vendorPrefix}keyframes ${animationName} {
-  `;
-
-  for (var frame in keyframes) {
-    cssText += `
-      ${frame} {
+  if (!insertedRuleMap[animationName]) {
+    let cssText = `
+      @${vendorPrefix}keyframes ${animationName} {
     `;
 
-    for (var cssProperty in keyframes[frame]) {
-      let cssValue = keyframes[frame][cssProperty];
-      cssText += ruleToString(cssProperty, cssValue);
+    for (var frame in keyframes) {
+      cssText += `
+        ${frame} {
+      `;
+
+      for (var cssProperty in keyframes[frame]) {
+        let cssValue = keyframes[frame][cssProperty];
+        cssText += ruleToString(cssProperty, cssValue);
+      }
+
+      cssText += "}";
     }
 
     cssText += "}";
+
+    appendStyle(cssText);
   }
 
-  cssText += "}";
-
-  appendStyle(cssText);
+  insertedRuleMap[animationName] = true;
 
   return animationName;
 };
