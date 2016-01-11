@@ -21,7 +21,7 @@ npm i buryem --save
 ## Developing
 To build locally, run:
 ```
-npm install
+npm install --ignore-scripts
 npm run build
 ```
 
