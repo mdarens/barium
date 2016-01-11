@@ -77,3 +77,9 @@ export const createAnimations = (animations) => {
   });
   return animationMap;
 }
+
+export default {
+  create,
+  createKeyframes,
+  createAnimations
+}

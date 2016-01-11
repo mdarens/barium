@@ -1,6 +1,6 @@
 {
   "name": "buryem",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "got style conflicts? bury 'em!",
   "main": "lib/buryem.js",
   "author": "Mark D'Arensbourg",
@@ -27,7 +27,8 @@
     ]
   },
   "scripts": {
-    "build": "babel -d lib src"
+    "build": "babel -d lib src",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "react",
