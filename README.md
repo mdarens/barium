@@ -27,7 +27,7 @@ npm run build
 
 ## Usage
 
-```
+```jsx
 import buryem from 'buryem';
 
 
