@@ -43,7 +43,7 @@ const animations = buryem.createAnimations({
 			transform: "translateX(0px)"
 		}			
 	}
-});
+}, 'optional-readable-namespace');
 
 const styles = buryem.create({
   btn: {
@@ -73,7 +73,7 @@ const styles = buryem.create({
       borderColor: '#46b8da'
     }
   }
-});
+}, 'optional-readable-namespace');
 
 const Example = (props) => (
 	<div>

@@ -3,35 +3,38 @@ import { rulesToString, ruleToString } from './converter';
 import hash from './hash';
 import getVendorPrefix from "react-kit/getVendorPrefix";
 
+const oHash = (obj) => hash(JSON.stringify(obj));
+
 const vendorPrefix = getVendorPrefix();
-var insertedRuleMap = {};
-var head = document.head || document.getElementsByTagName('head')[0];
-var styleTag;
+const insertedRuleMap = {};
+const head = document.head || document.getElementsByTagName('head')[0];
+let styleTag;
 
 function appendStyle(cssText) {
 
-  if(!styleTag){
-    styleTag = document.createElement('style')
-    head.appendChild(styleTag)
+  if(!styleTag) {
+    styleTag = document.createElement('style');
+    head.appendChild(styleTag);
   }
 
   if (styleTag.styleSheet) {
-    styleTag.styleSheet.cssText += cssText
+    styleTag.styleSheet.cssText += cssText;
   } else {
-    styleTag.appendChild(document.createTextNode(cssText))
+    styleTag.appendChild(document.createTextNode(cssText));
   }
 
 }
 
-export const create = (styles) => {
+export const create = (styles, classNameSpace) => {
   let cssText = '';
   let ruleMap = {};
+  let ns = classNameSpace || '';
 
-  Object.keys(styles).forEach((val, key) => {
-    let rules = styles[val];
-    let className = `_${hash(JSON.stringify(rules))}`; // All with ._ prefix
+  Object.keys(styles).forEach((c) => {
+    let rules = styles[c];
+    let className = `${ns}_${oHash(rules)}`;
     let selector = `.${className}`;
-    ruleMap[val] = className;
+    ruleMap[c] = className;
 
     if(!insertedRuleMap[selector]){
       cssText += rulesToString(selector, rules);
@@ -44,27 +47,30 @@ export const create = (styles) => {
   return ruleMap;
 };
 
-export const createKeyframes = (keyframes) => {
-  let animationName = `_${hash(JSON.stringify(keyframes))}`;
+export const createKeyframes = (keyframes, classNameSpace) => {
+  let ns = classNameSpace || '';
+  let animationName = `${ns}_${oHash(keyframes)}`;
   if (!insertedRuleMap[animationName]) {
     let cssText = `
       @${vendorPrefix}keyframes ${animationName} {
     `;
 
-    for (var frame in keyframes) {
+    for (let frame in keyframes) {
       cssText += `
         ${frame} {
       `;
 
-      for (var cssProperty in keyframes[frame]) {
+      for (let cssProperty in keyframes[frame]) {
         let cssValue = keyframes[frame][cssProperty];
         cssText += ruleToString(cssProperty, cssValue);
       }
 
-      cssText += "}";
+      cssText += `
+      }`;
     }
 
-    cssText += "}";
+    cssText += `
+    }`;
 
     appendStyle(cssText);
   }
@@ -74,10 +80,11 @@ export const createKeyframes = (keyframes) => {
   return animationName;
 };
 
-export const createAnimations = (animations) => {
+export const createAnimations = (animations, classNameSpace) => {
   let animationMap = {};
-  Object.keys(animations).forEach((animation) => {
-    animationMap[animation] = createKeyframes(animations[animation]);
+  let ns = classNameSpace || '';
+  Object.keys(animations).forEach((a) => {
+    animationMap[a] = createKeyframes(animations[a], ns);
   });
   return animationMap;
 }
