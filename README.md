@@ -82,3 +82,5 @@ const Example = (props) => (
 );
 
 ```
+
+Pass an object as a 3rd argument to any of these methods and they will add or append the styles to be injected to it as a `__cssText` property.

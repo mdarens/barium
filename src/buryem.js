@@ -7,10 +7,20 @@ const oHash = (obj) => hash(JSON.stringify(obj));
 
 const vendorPrefix = getVendorPrefix();
 const insertedRuleMap = {};
-const head = document.head || document.getElementsByTagName('head')[0];
+const head = document ? (document.head || document.getElementsByTagName('head')[0]) : false;
 let styleTag;
 
-function appendStyle(cssText) {
+function appendStyle(cssText, cssHolder) {
+  if (!head) {
+    if (cssHolder && typeof cssHolder === "object") {
+      if (cssHolder.__cssText) {
+        cssHolder.__cssText += cssText;
+      } else {
+        cssHolder.__cssText = cssText;
+      }
+    }
+    return;
+  }
 
   if(!styleTag) {
     styleTag = document.createElement('style');
@@ -23,9 +33,10 @@ function appendStyle(cssText) {
     styleTag.appendChild(document.createTextNode(cssText));
   }
 
+  return;
 }
 
-export const create = (styles, classNameSpace) => {
+export const create = (styles, classNameSpace, cssHolder) => {
   let cssText = '';
   let ruleMap = {};
   let ns = classNameSpace || '';
@@ -42,12 +53,12 @@ export const create = (styles, classNameSpace) => {
     insertedRuleMap[selector] = true;
   });
 
-  appendStyle(cssText);
+  appendStyle(cssText, cssHolder);
 
   return ruleMap;
 };
 
-export const createKeyframes = (keyframes, classNameSpace) => {
+export const createKeyframes = (keyframes, classNameSpace, cssHolder) => {
   let ns = classNameSpace || '';
   let animationName = `${ns}_${oHash(keyframes)}`;
   if (!insertedRuleMap[animationName]) {
@@ -72,7 +83,7 @@ export const createKeyframes = (keyframes, classNameSpace) => {
     cssText += `
     }`;
 
-    appendStyle(cssText);
+    appendStyle(cssText, cssHolder);
   }
 
   insertedRuleMap[animationName] = true;
@@ -80,11 +91,11 @@ export const createKeyframes = (keyframes, classNameSpace) => {
   return animationName;
 };
 
-export const createAnimations = (animations, classNameSpace) => {
+export const createAnimations = (animations, classNameSpace, cssHolder) => {
   let animationMap = {};
   let ns = classNameSpace || '';
   Object.keys(animations).forEach((a) => {
-    animationMap[a] = createKeyframes(animations[a], ns);
+    animationMap[a] = createKeyframes(animations[a], ns, cssHolder);
   });
   return animationMap;
 }
