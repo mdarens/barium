@@ -1,6 +1,6 @@
 import escape from './escape';
 import isValidValue from './validator';
-import getVendorPropertyName from 'react-kit/getVendorPropertyName';
+import getVendorPropertyName from './property-name';
 
 const _uppercasePattern = /([A-Z])/g;
 const msPattern = /^ms-/;

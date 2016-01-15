@@ -1,7 +1,7 @@
 import React from 'react';
 import { rulesToString, ruleToString } from './converter';
 import hash from './hash';
-import getVendorPrefix from "react-kit/getVendorPrefix";
+import getVendorPrefix from "./prefix";
 
 const oHash = (obj) => hash(JSON.stringify(obj));
 
