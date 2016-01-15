@@ -52,7 +52,7 @@ const processValueForProp = (value, prop) => {
 
 export const ruleToString = (propName, value) => {
 
-  propName = getVendorPropertyName(propName);
+  propName = getVendorPropertyName(propName) || propName;
 
   var cssPropName = hyphenateProp(propName);
   if (!isValidValue(value)) {
