@@ -1,12 +1,13 @@
 // based on react-kit/getVendorPropertyName
+import hasDocument from "./has-document";
 
-let builtinStyle = document ? document.createElement('div').style : null;
+let builtinStyle = hasDocument ? document.createElement('div').style : null;
 let prefixes = ['Moz', 'Webkit', 'O', 'ms'];
 let domVendorPrefix;
 
 // Helper function to get the proper vendor property name. (transition => WebkitTransition)
 export default (prop, isSupportTest) => {
-		if (!document) {
+		if (!hasDocument) {
 			return '';
 		}
 

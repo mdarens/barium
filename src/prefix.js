@@ -1,4 +1,5 @@
 // based on react-kit/getVendorPrefix
+import hasDocument from "./has-document";
 
 let cssVendorPrefix;
 
@@ -8,7 +9,7 @@ export default () => {
       return cssVendorPrefix;
     }
 
-    if (!(window && document)) {
+    if (!hasDocument) {
       return '';
     }
 

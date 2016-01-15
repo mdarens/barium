@@ -2,12 +2,13 @@ import React from 'react';
 import { rulesToString, ruleToString } from './converter';
 import hash from './hash';
 import getVendorPrefix from "./prefix";
+import hasDocument from "./has-document";
 
 const oHash = (obj) => hash(JSON.stringify(obj));
 
 const vendorPrefix = getVendorPrefix();
 const insertedRuleMap = {};
-const head = document ? (document.head || document.getElementsByTagName('head')[0]) : false;
+const head = hasDocument ? (document.head || document.getElementsByTagName('head')[0]) : null;
 let styleTag;
 
 function appendStyle(cssText, cssHolder) {
