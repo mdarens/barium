@@ -35,8 +35,9 @@ function hyphenateProp(string) {
 
 
 const processValueForProp = (value, prop) => {
-  // 'content' is a special property that must be quoted
-  if (prop === 'content') {
+  // 'content' is a special property that must be quoted,
+  //  except when calling an attr function
+  if (prop === 'content' && value.substr(0,5) !== "attr(") {
     return `"${value}"`;
   }
 

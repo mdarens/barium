@@ -1,8 +1,9 @@
 {
   "name": "buryem",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "got style conflicts? bury 'em!",
   "main": "lib/buryem.js",
+  "tonicExampleFilename": "lib/example.js",
   "author": "Mark D'Arensbourg",
   "license": "MIT",
   "repository": {
