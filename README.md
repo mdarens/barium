@@ -77,7 +77,17 @@ const styles = buryem.create({
 
 const Example = (props) => (
 	<div>
-		<button className={styles.btn}>Click Me</button>
+		<button className={styles.btn}>
+			Click Me <span data-nah="nah">or nah</span>
+		</button>
+		<style>
+			{/* if you need to reach into the children you can do this */}
+			{`
+				.${styles.btn} [data-nah="nah"] {
+					color: #f0f;
+				}
+			`}
+		</style>
 	</div>
 );
 
