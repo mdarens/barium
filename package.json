@@ -1,6 +1,6 @@
 {
   "name": "buryem",
-  "version": "1.2.6",
+  "version": "1.3.0",
   "description": "got style conflicts? bury 'em!",
   "main": "lib/buryem.js",
   "tonicExampleFilename": "lib/example.js",
@@ -11,8 +11,10 @@
     "url": "https://github.com/mdarens/buryem.git"
   },
   "dependencies": {
-    "react": "^0.14.4",
     "react-kit": "^0.1.3"
+  },
+  "peerDependencies": {
+    "react": ">=0.14"
   },
   "devDependencies": {
     "babel-cli": "^6.4.0",
